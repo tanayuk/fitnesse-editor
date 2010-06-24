@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="fitedit.editors.FitnesseEditor"
+            contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
+            default="true"
+            filenames="context.txt"
+            icon="icons/icon_doc.gif"
+            id="fitedit.editors.FitnesseEditor"
+            name="Fitnesse Editor">
+      </editor>
+   </extension>
+
+</plugin>
