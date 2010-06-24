@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/fitedit.feature_1.0.0.v20100625.jar" id="fitedit.feature" version="1.0.0.v20100625">
+      <category name="fitedit"/>
+   </feature>
+   <category-def name="fitedit" label="Fitnesse Editor">
+      <description>
+         Fitnesse Editor adding support to write a fitnesse testcase within Eclipse IDE.
+      </description>
+   </category-def>
+</site>
