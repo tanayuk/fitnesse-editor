@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="fiteditFeature"
-      label="FitEditFeature"
+      label="Fitnesse Editor Feature"
       version="1.0.0.v20100625"
       plugin="fitedit">
 
-   <description url="http://www.example.com/description">
-      [Enter Feature Description here.]
+   <description url="http://code.google.com/p/fitnesse-editor/">
+      Fitnesse Editor Feature
    </description>
 
-   <copyright url="http://www.example.com/copyright">
-      [Enter Copyright Description here.]
+   <copyright url="http://code.google.com/p/fitnesse-editor/">
+      Copyright
    </copyright>
 
-   <license url="http://www.example.com/license">
-      [Enter License Description here.]
+   <license url="http://code.google.com/p/fitnesse-editor/">
+      Eclipse Public License 1.0
    </license>
 
    <url>
