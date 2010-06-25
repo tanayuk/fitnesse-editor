@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Fitedit
 Bundle-SymbolicName: fitedit; singleton:=true
-Bundle-Version: 1.0.3.v20100626
+Bundle-Version: 1.0.4.v20100626
 Bundle-Activator: fitedit.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
@@ -15,7 +15,7 @@ Require-Bundle: org.eclipse.ui,
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: prov
-Export-Package: fitedit;uses:="org.eclipse.jface.resource,org.eclipse.ui.plugin,org.osgi.framework",
+Export-Package: fitedit,
  fitedit.editors;
   uses:="org.eclipse.jface.text,
    org.eclipse.core.runtime,
