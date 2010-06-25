@@ -8,7 +8,7 @@
             class="fitedit.editors.FitnesseEditor"
             contributorClass="org.eclipse.ui.texteditor.BasicTextEditorActionContributor"
             default="true"
-            filenames="context.txt"
+            filenames="content.txt"
             icon="icons/icon_doc.gif"
             id="fitedit.editors.FitnesseEditor"
             name="Fitnesse Editor">
