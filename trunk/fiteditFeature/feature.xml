@@ -2,7 +2,7 @@
 <feature
       id="fiteditFeature"
       label="Fitnesse Editor Feature"
-      version="1.0.1.v20100626"
+      version="1.0.2.v20100626"
       plugin="fitedit">
 
    <description url="http://code.google.com/p/fitnesse-editor/">
