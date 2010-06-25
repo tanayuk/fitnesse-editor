@@ -1,12 +1,22 @@
 package fitedit.editors.outline;
 
+import java.util.Iterator;
+
 import org.eclipse.jface.text.BadPositionCategoryException;
 import org.eclipse.jface.text.DefaultPositionUpdater;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.IPositionUpdater;
+import org.eclipse.jface.text.Position;
+import org.eclipse.jface.text.source.Annotation;
+import org.eclipse.jface.text.source.IAnnotationModel;
+import org.eclipse.jface.text.source.projection.ProjectionAnnotation;
+import org.eclipse.jface.text.source.projection.ProjectionAnnotationModel;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.ui.texteditor.IDocumentProvider;
+import org.eclipse.ui.texteditor.ITextEditor;
+
+import fitedit.editors.outline.SegmentTree.NodeType;
 
 public class OutlineContentProvider implements ITreeContentProvider {
 
@@ -15,11 +25,13 @@ public class OutlineContentProvider implements ITreeContentProvider {
 
 	private final static String SEGMENTS= "__segments";
 	private IPositionUpdater positionUpdater= new DefaultPositionUpdater(SEGMENTS);
+	private IAnnotationModel model;
 	private SegmentTree tree;
 	
-	public OutlineContentProvider(IDocumentProvider documentProvider) {
+	public OutlineContentProvider(IDocumentProvider documentProvider, ITextEditor editor) {
 		this.documentProvider = documentProvider;
 		parser = new FitContentParser();
+		model = (IAnnotationModel) editor.getAdapter(ProjectionAnnotationModel.class);
 	}
 	
 	@Override
@@ -27,8 +39,39 @@ public class OutlineContentProvider implements ITreeContentProvider {
 		
 	}
 
+	private void clearAnnotations(){
+		if(model == null) {
+			return;
+		}
+		
+		Iterator itor = model.getAnnotationIterator();
+		while( itor.hasNext() ){
+			Annotation a = (Annotation) itor.next();
+			model.removeAnnotation(a);
+		}
+	}
+	
+	private void addAnnotations(String src){
+		if(model == null) {
+			return;
+		}
+		
+		for (SegmentTree seg : tree.children) {
+			if(seg.nodeType != NodeType.FOLDING) continue;
+			if(seg.matched.length() <= 1) continue;
+			
+			String target = seg.matched.substring(1) + "!";
+			int idx = src.indexOf(target, seg.position.offset);
+			if(idx < 0) continue;
+			
+			model.addAnnotation(new ProjectionAnnotation(), new Position(seg.position.offset, (idx - seg.position.offset + target.length())));
+		}
+	}
+	
 	@Override
 	public void inputChanged(Viewer viewer, Object oldInput, Object newInput) {
+		clearAnnotations();
+		
 		if (oldInput != null) {
 			IDocument document= documentProvider.getDocument(oldInput);
 			if (document != null) {
@@ -48,6 +91,7 @@ public class OutlineContentProvider implements ITreeContentProvider {
 				document.addPositionUpdater(positionUpdater);
 
 				tree = parser.parse(document.get());
+				addAnnotations(document.get());
 			}
 		}
 	}

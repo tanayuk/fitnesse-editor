@@ -3,6 +3,11 @@ package fitedit.editors;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.text.source.ISourceViewer;
+import org.eclipse.jface.text.source.IVerticalRuler;
+import org.eclipse.jface.text.source.projection.ProjectionSupport;
+import org.eclipse.jface.text.source.projection.ProjectionViewer;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.PartInitException;
@@ -20,7 +25,8 @@ import fitedit.editors.outline.FitOutlinePage;
  */
 public class FitnesseEditor extends TextEditor {
 
-	private FitOutlinePage outlinePage = null;
+	private FitOutlinePage outlinePage;
+	private ProjectionSupport projectionSupport;
 
 	public FitnesseEditor() {
 		super();
@@ -40,6 +46,13 @@ public class FitnesseEditor extends TextEditor {
 			return outlinePage;
 		}
 
+		// folding
+		if (projectionSupport != null) {
+			Object adapter = projectionSupport.getAdapter(getSourceViewer(), required);
+			if (adapter != null)
+				return adapter;
+		}
+		
 		return super.getAdapter(required);
 	}
 
@@ -75,5 +88,28 @@ public class FitnesseEditor extends TextEditor {
 		if(outlinePage != null) {
 			outlinePage.update();
 		}
+	}
+		
+	@Override
+	public void createPartControl(Composite parent) {
+		super.createPartControl(parent);
+
+	    //turn projection mode on
+		ProjectionViewer viewer =(ProjectionViewer)getSourceViewer();
+	    projectionSupport = new ProjectionSupport(viewer,getAnnotationAccess(),getSharedColors());
+	    projectionSupport.install();
+	    viewer.doOperation(ProjectionViewer.TOGGLE);
+	}
+	
+	@Override
+	protected ISourceViewer createSourceViewer(Composite parent,
+			IVerticalRuler ruler, int styles) {
+		ISourceViewer viewer = new ProjectionViewer(parent, ruler,
+				getOverviewRuler(), isOverviewRulerVisible(), styles);
+
+		// ensure decoration support has been created and configured.
+		getSourceViewerDecorationSupport(viewer);
+
+		return viewer;
 	}
 }

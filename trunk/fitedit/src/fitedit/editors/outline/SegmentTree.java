@@ -18,20 +18,22 @@ class SegmentTree {
 	public SegmentTree parent;
 	public List<SegmentTree> children = new ArrayList<SegmentTree>();
 
-	public String name;
+	public String matched;
+	public String args;
 	public Position position;
 	public NodeType nodeType;
 
-	public SegmentTree(SegmentTree parent, NodeType nodeType, String name,
+	public SegmentTree(SegmentTree parent, NodeType nodeType, String matched, String args,
 			Position position) {
 		this.parent = parent;
 		this.nodeType = nodeType;
-		this.name = name;
+		this.matched = matched;
+		this.args = args;
 		this.position = position;
 	}
 
 	public String toString() {
-		return name;
+		return args;
 	}
 
 }

@@ -33,7 +33,7 @@ public class FitOutlinePage extends ContentOutlinePage {
 		super.createControl(parent);
 
 		TreeViewer viewer = getTreeViewer();
-		viewer.setContentProvider(new OutlineContentProvider(documentProvider));
+		viewer.setContentProvider(new OutlineContentProvider(documentProvider, fitnesseEditor));
 		viewer.setLabelProvider(new OutlineLabelProvider());
 		viewer.addSelectionChangedListener(this);
 		viewer.setInput(editorInput);
