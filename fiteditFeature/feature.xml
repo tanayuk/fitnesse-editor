@@ -2,7 +2,7 @@
 <feature
       id="fiteditFeature"
       label="Fitnesse Editor Feature"
-      version="1.0.0.v20100625"
+      version="1.0.1.v20100626"
       plugin="fitedit">
 
    <description url="http://code.google.com/p/fitnesse-editor/">
@@ -36,7 +36,7 @@
          id="fitedit"
          download-size="0"
          install-size="0"
-         version="1.0.0.v20100625"
+         version="0.0.0"
          unpack="false"/>
 
 </feature>
