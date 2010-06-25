@@ -25,9 +25,14 @@ public class FitContentParserTest {
 				"!|table1|test \n");
 		
 		assertEquals(3, tree.children.size());
-		assertEquals("test head1", tree.children.get(0).name);
-		assertEquals("test fold1", tree.children.get(1).name);
-		assertEquals("table1|test", tree.children.get(2).name);
+		assertEquals("!1", tree.children.get(0).matched);
+		assertEquals("test head1", tree.children.get(0).args);
+		
+		assertEquals("!*", tree.children.get(1).matched);
+		assertEquals("test fold1", tree.children.get(1).args);
+		
+		assertEquals("!|", tree.children.get(2).matched);
+		assertEquals("table1|test", tree.children.get(2).args);
 	}
 	
 }

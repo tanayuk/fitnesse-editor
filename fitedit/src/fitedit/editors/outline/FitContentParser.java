@@ -11,12 +11,12 @@ import fitedit.editors.outline.SegmentTree.NodeType;
 
 public class FitContentParser {
 
-	private static final Pattern patternFolding = Pattern.compile("^!\\*+(.*)$", Pattern.MULTILINE);
-	private static final Pattern patternHeadline = Pattern.compile("^!\\d(.*)$", Pattern.MULTILINE);
+	private static final Pattern patternFolding = Pattern.compile("^(!\\*+)(.*)$", Pattern.MULTILINE);
+	private static final Pattern patternHeadline = Pattern.compile("^(!\\d)(.*)$", Pattern.MULTILINE);
 	private static final Pattern patternTable = Pattern.compile("^!\\|(.*)$", Pattern.MULTILINE);
 	
 	public SegmentTree parse(String src) {
-		SegmentTree root = new SegmentTree(null, NodeType.DEFAULT, "ROOT", null);
+		SegmentTree root = new SegmentTree(null, NodeType.DEFAULT, null, "ROOT", null);
 		if(src == null) {
 			return root;
 		}
@@ -26,17 +26,17 @@ public class FitContentParser {
 		// search !* 
 		matcher = patternFolding.matcher(src);
 		while(matcher.find()){
-			root.children.add(new SegmentTree(root, NodeType.FOLDING, matcher.group(1).trim(), new Position(matcher.start())));
+			root.children.add(new SegmentTree(root, NodeType.FOLDING, matcher.group(1).trim(), matcher.group(2).trim(), new Position(matcher.start())));
 		}
 
 		matcher = patternHeadline.matcher(src);
 		while(matcher.find()){
-			root.children.add(new SegmentTree(root, NodeType.HEADLINE, matcher.group(1).trim(), new Position(matcher.start())));
+			root.children.add(new SegmentTree(root, NodeType.HEADLINE, matcher.group(1).trim(), matcher.group(2).trim(), new Position(matcher.start())));
 		}
 
 		matcher = patternTable.matcher(src);
 		while(matcher.find()){
-			root.children.add(new SegmentTree(root, NodeType.TABLE, matcher.group(1).trim(), new Position(matcher.start())));
+			root.children.add(new SegmentTree(root, NodeType.TABLE, "!|", matcher.group(1).trim(), new Position(matcher.start())));
 		}
 		
 		Collections.sort(root.children, new Comparator<SegmentTree>() {

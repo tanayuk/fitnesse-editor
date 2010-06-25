@@ -22,6 +22,14 @@ public class FitScanner extends RuleBasedScanner {
 		IToken actionBoldToken =
 			new Token(
 				new TextAttribute(manager.getColor(IFitColorConstants.ACTION_BOLD), null, SWT.BOLD));
+		
+		IToken headlineToken =
+			new Token(
+				new TextAttribute(manager.getColor(IFitColorConstants.HEADLINE)));
+		
+		IToken headlineBoldToken =
+			new Token(
+				new TextAttribute(manager.getColor(IFitColorConstants.HEADLINE), null, SWT.BOLD));
 				
 		IToken tableToken =
 			new Token(
@@ -45,14 +53,20 @@ public class FitScanner extends RuleBasedScanner {
 		rules.add(new EndOfLineRule("!define", actionToken));
 		
 		rules.add(new EndOfLineRule("!include", actionBoldToken));
-		rules.add(new EndOfLineRule("!1", actionBoldToken));
-		rules.add(new EndOfLineRule("!2", actionBoldToken));
-		rules.add(new EndOfLineRule("!3", actionBoldToken));
-		rules.add(new EndOfLineRule("!4", actionToken));
-		rules.add(new EndOfLineRule("!5", actionToken));
-		rules.add(new EndOfLineRule("!6", actionToken));
+		rules.add(new EndOfLineRule("!1", headlineBoldToken));
+		rules.add(new EndOfLineRule("!2", headlineBoldToken));
+		rules.add(new EndOfLineRule("!3", headlineBoldToken));
+		rules.add(new EndOfLineRule("!4", headlineToken));
+		rules.add(new EndOfLineRule("!5", headlineToken));
+		rules.add(new EndOfLineRule("!6", headlineToken));
 
 		rules.add(new EndOfLineRule("!*", actionBoldToken));
+		rules.add(new EndOfLineRule("*!", actionBoldToken));
+		rules.add(new EndOfLineRule("**!", actionBoldToken));
+		rules.add(new EndOfLineRule("***!", actionBoldToken));
+		rules.add(new EndOfLineRule("****!", actionBoldToken));
+		rules.add(new EndOfLineRule("*****!", actionBoldToken));
+		rules.add(new EndOfLineRule("******!", actionBoldToken));
 		
 		// Word Rule
 		WordRule wordRule = new WordRule(new FitWordDetector(), defaultToken);
