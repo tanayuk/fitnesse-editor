@@ -68,6 +68,10 @@ public class FitnesseEditor extends TextEditor {
 	 */
 	private void setTabLabel(IEditorInput input){
 		IFile file = ResourceUtil.getFile(input);
+		if(file == null){
+			return;
+		}
+		
 		String fileName = file.getName();
 		if(fileName == null || !fileName.equals("content.txt")) {
 			return;
