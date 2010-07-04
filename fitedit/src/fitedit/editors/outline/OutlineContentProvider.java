@@ -1,6 +1,8 @@
 package fitedit.editors.outline;
 
 import java.util.Iterator;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.eclipse.jface.text.BadPositionCategoryException;
 import org.eclipse.jface.text.DefaultPositionUpdater;
@@ -60,11 +62,20 @@ public class OutlineContentProvider implements ITreeContentProvider {
 			if(seg.nodeType != NodeType.FOLDING) continue;
 			if(seg.matched.length() <= 1) continue;
 			
-			String target = seg.matched.substring(1) + "!";
-			int idx = src.indexOf(target, seg.position.offset);
-			if(idx < 0) continue;
+			String target = "[^\\w\\*]" + seg.matched.substring(1).replace("*", "\\*") + "!";
+			Matcher matcher = Pattern.compile(target).matcher(src);
 			
-			model.addAnnotation(new ProjectionAnnotation(), new Position(seg.position.offset, (idx - seg.position.offset + target.length())));
+			boolean isFound = matcher.find(seg.position.offset);
+			if(!isFound) {
+				continue;
+			}
+			
+			int startIdx = matcher.start();
+			if(startIdx < 0) {
+				continue;
+			}
+			
+			model.addAnnotation(new ProjectionAnnotation(), new Position(seg.position.offset, (startIdx - seg.position.offset + seg.matched.length())));
 		}
 	}
 	
