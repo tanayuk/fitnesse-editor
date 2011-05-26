@@ -14,5 +14,19 @@
             name="Fitnesse Editor">
       </editor>
    </extension>
+   <extension
+         point="org.eclipse.ui.preferencePages">
+      <page
+            class="fitedit.preferences.FitPreferencePage"
+            id="fitedit.preferences.FitPreferencePage"
+            name="Fitnesse Editor Preferences">
+      </page>
+   </extension>
+   <extension
+         point="org.eclipse.core.runtime.preferences">
+      <initializer
+            class="fitedit.preferences.PreferenceInitializer">
+      </initializer>
+   </extension>
 
 </plugin>
